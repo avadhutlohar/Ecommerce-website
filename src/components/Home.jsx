@@ -51,7 +51,7 @@ setFilteredProducts(products.filter((p) => p.category == category));
       </div>
     </>
   ) : (
-    <Loading />
+    <Nav />
   );
 };
 

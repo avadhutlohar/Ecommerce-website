@@ -33,6 +33,7 @@ const Create = () => {
     };
     setProducts([...products, product]);
     localStorage.setItem("products", JSON.stringify([...products, product]));
+    toast.success("Product Added Successfully");
     navigate("/");
   };
   return (

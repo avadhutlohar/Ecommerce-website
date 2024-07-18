@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { ProductContext } from "../utils/Context";
 import { Link } from "react-router-dom";
 
+
 const Nav = () => {
   const [products] = useContext(ProductContext);
   let categories =
