@@ -1,23 +1,35 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { ProductContext } from "../utils/Context";
-import axios from "../utils/axios";
+// import axios from "../utils/axios";
 import Loading from "./Loading";
 
 const Details = () => {
+  const navigate = useNavigate();
+  const [products, setProducts] = useContext(ProductContext);
   const [product, setProduct] = useState(null);
   const { id } = useParams();
-  const getSingleProduct = async () => {
-    try {
-      const { data } = await axios.get(`/products/${id}`);
-      setProduct(data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const getSingleProduct = async () => {
+  //   try {
+  //     const { data } = await axios.get(`/products/${id}`);
+  //     setProduct(data);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
   useEffect(() => {
-    getSingleProduct();
+    if (!product) {
+      setProduct(products.filter((p) => p.id == id)[0]);
+    }
+    // getSingleProduct();
   }, []);
+  const productDeleteHandler = (id) => {
+    const filteredProducts = products.filter((p) => p.id !== id);
+    setProducts(filteredProducts);
+    localStorage.setItem("products", JSON.stringify(filteredProducts));
+    navigate("/");
+  };
+
   return product ? (
     <div className="flex justify-between items-center w-[70%] h-full m-auto  p-[10%]">
       <img
@@ -33,9 +45,12 @@ const Details = () => {
         <Link className="mr-5 py-2 px-5 border rounded border-blue-200 text-blue-300">
           Edit
         </Link>
-        <Link className="py-2 px-5 border rounded border-red-200 text-red-300">
+        <button
+          onClick={productDeleteHandler(product.id)}
+          className="py-2 px-5 border rounded border-red-200 text-red-300"
+        >
           Delete
-        </Link>
+        </button>
       </div>
     </div>
   ) : (
