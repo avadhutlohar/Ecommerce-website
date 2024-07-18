@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
 import { ProductContext } from "../utils/Context";
-import {nanoid} from "nanoid";
+import { nanoid } from "nanoid";
 import { useNavigate } from "react-router-dom";
 
 const Create = () => {
-  const navigate =  useNavigate();
+  const navigate = useNavigate();
   const [products, setProducts] = useContext(ProductContext);
   const [title, setTitle] = useState("");
   const [image, setImage] = useState("");
